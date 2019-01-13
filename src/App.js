@@ -5,20 +5,23 @@ import Navbar from './components/layout/Navbar';
 import Index from './components/layout/Index';
 
 import './App.css';
+import { Provider } from './context';
 
 class App extends Component {
   render() {
     return (
-      <Router>
-        <>
-          <Navbar />
-          <div className="container">
-            <Switch>
-              <Route exact path="/" component={Index} />
-            </Switch>
-          </div>
-        </>
-      </Router>
+      <Provider>
+        <Router>
+          <>
+            <Navbar />
+            <div className="container">
+              <Switch>
+                <Route exact path="/" component={Index} />
+              </Switch>
+            </div>
+          </>
+        </Router>
+      </Provider>
     );
   }
 }
