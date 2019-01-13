@@ -7,7 +7,7 @@ class Search extends Component {
     trackTitle: ''
   };
 
-  findTrack = e => {
+  findTrack = (dispatch, e) => {
     e.preventDefault();
     axios
       .get(
@@ -18,8 +18,11 @@ class Search extends Component {
         }`
       )
       .then(res => {
-        console.log(res.data);
-        this.setState({ track_list: res.data.message.body.track_list });
+        // console.log(res.data);
+        dispatch({
+          type: 'SEARCH_TRACKS',
+          payload: res.data.message.body.track_list
+        });
       })
       .catch(err => console.log(err));
   };
@@ -32,13 +35,15 @@ class Search extends Component {
     return (
       <Consumer>
         {value => {
+          //   console.log(value);
+          const { dispatch } = value;
           return (
             <div className="card card-body mb-4 p-4">
               <h1 className="display-4 text-center">
                 <i className="fas fa-music" /> Search For A Song
               </h1>
               <p className="lead text-center">Get the lyrics for any song</p>
-              <form onSubmit={this.findTrack}>
+              <form onSubmit={this.findTrack.bind(this, dispatch)}>
                 <div className="form-group">
                   <input
                     type="text"
